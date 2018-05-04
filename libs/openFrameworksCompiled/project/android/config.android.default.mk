@@ -137,8 +137,8 @@ endif
 
 ifeq ($(ABI),x86)
 	ABI_PATH = x86
-    PLATFORM_PROJECT_RELEASE_TARGET = libs/$(ABI_PATH)/libOFAndroidApp_x86.so
-    PLATFORM_PROJECT_DEBUG_TARGET = libs/$(ABI_PATH)/libOFAndroidApp_x86.so
+	PLATFORM_PROJECT_RELEASE_TARGET = libs/$(ABI_PATH)/libOFAndroidApp_x86.so
+	PLATFORM_PROJECT_DEBUG_TARGET = libs/$(ABI_PATH)/libOFAndroidApp_x86.so
 endif
 
 PLATFORM_CORELIB_RELEASE_TARGET = $(OF_CORE_LIB_PATH)/$(ABI)/libopenFrameworks.a
@@ -181,14 +181,14 @@ PLATFORM_CFLAGS = -Wall -std=c++14
 
 # Code Generation Option Flags (http://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html)
 PLATFORM_CFLAGS +=  -nostdlib --sysroot=$(SYSROOT) -fpic \
-    -ffunction-sections \
-    -funwind-tables \
-    -fstack-protector-strong \
-    -Wno-invalid-command-line-argument \
-    -Wno-unused-command-line-argument \
-    -no-canonical-prefixes \
-		-gcc-toolchain $(GCC_TOOLCHAIN)/prebuilt/$(HOST_PLATFORM) \
-		-fno-integrated-as
+	-ffunction-sections \
+	-funwind-tables \
+	-fstack-protector-strong \
+	-Wno-invalid-command-line-argument \
+	-Wno-unused-command-line-argument \
+	-no-canonical-prefixes \
+	-gcc-toolchain $(GCC_TOOLCHAIN)/prebuilt/$(HOST_PLATFORM) \
+	-fno-integrated-as
 
 
 ifeq ($(ABI),armv7)
@@ -212,7 +212,7 @@ endif
 ################################################################################
 
 PLATFORM_LDFLAGS =
-PLATFORM_LDFLAGS += --sysroot=$(SYSROOT) -L"$(NDK_ROOT)/sources/cxx-stl/llvm-libc++/libs/$(ABI_PATH)"
+PLATFORM_LDFLAGS += --sysroot=$(SYSROOT) --isystem=$(SYSROOT) -L"$(NDK_ROOT)/sources/cxx-stl/llvm-libc++/libs/$(ABI_PATH)"
 PLATFORM_LDFLAGS += -shared -Wl,--no-undefined -Wl,--as-needed -Wl,--gc-sections -Wl,--exclude-libs,ALL -gcc-toolchain $(GCC_TOOLCHAIN)/prebuilt/$(HOST_PLATFORM)
 
 
@@ -321,8 +321,9 @@ PROJECT_EXCLUSIONS += ./libs
 
 PLATFORM_HEADER_SEARCH_PATHS =
 PLATFORM_HEADER_SEARCH_PATHS += "$(SYSROOT)/usr/include/"
-PLATFORM_HEADER_SEARCH_PATHS += "$(NDK_ROOT)/sources/android/support/include"
 PLATFORM_HEADER_SEARCH_PATHS += "$(NDK_ROOT)/sources/cxx-stl/llvm-libc++/libcxx/include"
+PLATFORM_HEADER_SEARCH_PATHS += "$(NDK_ROOT)/sources/cxx-stl/llvm-libc++/include"
+PLATFORM_HEADER_SEARCH_PATHS += "$(NDK_ROOT)/sources/android/support/include"
 #PLATFORM_HEADER_SEARCH_PATHS += "$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/include"
 #PLATFORM_HEADER_SEARCH_PATHS += "$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/$(GCC_VERSION)/include"
 #PLATFORM_HEADER_SEARCH_PATHS += "$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/libs/$(ABI_PATH)/include"

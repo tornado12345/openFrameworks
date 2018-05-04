@@ -2,8 +2,7 @@
 
 #include "ofConstants.h"
 #include "pugixml.hpp"
-#include "ofFileUtils.h"
-#include "ofUtils.h"
+#include "ofParameter.h"
 
 template<class It>
 class ofXmlIterator;
@@ -94,6 +93,7 @@ public:
 	ofXml();
 
 	bool load(const std::filesystem::path & file);
+	bool load(const ofBuffer & buffer);
 	bool parse(const std::string & xmlStr);
 	bool save(const std::filesystem::path & file) const;
 	std::string toString(const std::string & indent = "\t") const;
@@ -152,6 +152,7 @@ public:
 	}
 
 	std::string getValue() const;
+	std::string getName() const;
 
 	template<typename T>
 	void set(const T & value){
@@ -286,3 +287,6 @@ private:
 	mutable ofXml xml;
 	friend ofXml::Search;
 };
+// serializer
+void ofSerialize(ofXml & xml, const ofAbstractParameter & parameter);
+void ofDeserialize(const ofXml & xml, ofAbstractParameter & parameter);
