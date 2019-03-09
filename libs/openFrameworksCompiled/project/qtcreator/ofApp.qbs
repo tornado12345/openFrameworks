@@ -68,7 +68,7 @@ CppApplication{
         property string sourceDirectory: project.sourceDirectory;
         property string appname: parent.name
         configure: {
-            name = Helpers.parseConfig(sourceDirectory + "/config.make", "APPNAME", appname, "all");
+            name = Helpers.parseConfig(sourceDirectory + "/config.make", "APPNAME", appname, "all") + ""; // NOTE: we must add an empty String so that the result will be converted to String
             found = true;
         }
     }
@@ -170,6 +170,14 @@ CppApplication{
         fileTags: ["icons"]
     }
 
+    Group {
+        name: "precompiled headers"
+        condition: project.precompileOfMain === true
+        files: [
+            FileInfo.joinPaths(parent.of_root, '/openFrameworks/ofMain.h'),
+        ]
+        fileTags: ["cpp_pch_src"]
+    }
 
 
     Rule {
