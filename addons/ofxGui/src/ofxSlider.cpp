@@ -105,6 +105,7 @@ bool ofxSlider<Type>::mousePressed(ofMouseEventArgs & mouse){
 			if(b.inside(mouse)){
 				state = Input;
 				auto mouseLeft = mouse;
+				input.setShape(b);
 				mouseLeft.button = OF_MOUSE_BUTTON_LEFT;
 				input.mousePressed(mouseLeft);
 				return true;
@@ -215,13 +216,11 @@ void ofxSlider<Type>::generateDraw(){
 	bar.clear();
 
 	bg.setFillColor(thisBackgroundColor);
-	bg.setFilled(true);
-	bg.rectangle(b);
+	bg.setExtents(b);
 
 	float valAsPct = ofMap( value, value.getMin(), value.getMax(), 0, b.width-2, true );
 	bar.setFillColor(thisFillColor);
-	bar.setFilled(true);
-	bar.rectangle(b.x+1, b.y+1, valAsPct, b.height-2);
+	bar.setExtents(b.x+1, b.y+1, valAsPct, b.height-2);
 
 	generateText();
 	input.generateDraw();
@@ -337,7 +336,7 @@ void ofxSlider<Type>::valueChanged(Type & value){
 }
 
 template<typename Type>
-void ofxSlider<Type>::setPosition(const ofPoint & p){
+void ofxSlider<Type>::setPosition(const glm::vec3 & p){
 	ofxBaseGui::setPosition(p);
 	input.setPosition(p);
 }
